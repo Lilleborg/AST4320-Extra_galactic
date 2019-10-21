@@ -15,8 +15,8 @@ def FWHM(w,k):
     half_max = w.max()/2
     id_half_max = np.argmin(np.abs(w-half_max)) # first id at half max
                                         # this gives k value on negative side
-    k_low = k[id_half_max]
-    return [[k_low,-k_low],half_max]
+    k_value = np.abs(k[id_half_max])
+    return [[-k_value,k_value],half_max]
 
 w,fwhm = w(k,R)
 width = np.abs(fwhm[0][1]-fwhm[0][0])
@@ -29,4 +29,5 @@ ax.arrow(fwhm[0][0],fwhm[1],width,0,width=0.01)# not so fancy, but does the tric
 ax.set_xlabel('k')
 ax.set_ylabel(r'$\tilde{W}(k)$')
 ax.set_title('Fourier Transformed Top-hat Smoothing Function in 1D')
+fig.savefig('window_func.pdf')
 plt.show()

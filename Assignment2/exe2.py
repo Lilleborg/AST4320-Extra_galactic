@@ -60,7 +60,7 @@ class RandomWalk:
     
     def gaussian(self,critical=False):
         sigma = sqrt(pi)/self.Sc**2 # just using the last optained scale
-        delta_cont = np.linspace(-8,8,int(1e4))
+        delta_cont = np.linspace(np.min(self.deltas),np.max(self.deltas),int(1e4))
         if not critical:
             return delta_cont,1/(sqrt(2*pi)*sigma)*np.exp(-delta_cont**2/(2*sigma**2))
         else:
@@ -85,15 +85,15 @@ if __name__ == '__main__':
     ax.legend()
     fig.savefig('randomwalk.pdf')
 
-    # fig1,ax1 = plt.subplots()
+    fig1,ax1 = plt.subplots()
     
-    # ax1.hist(RW_crit.deltas,bins='auto',density=True,label='Random walk')
-    # ax1.plot(*RW_crit.gaussian(critical=True),label='Analytical with fudge')
-    # ax1.set_title(r'Overdensity distribution, never crossing $\delta_{crit} = 1$')
-    # ax1.set_ylabel(r'$P_{crit}(\delta \, | M) \times 2.2$')
-    # ax1.set_xlabel(r'$\delta$')
-    # ax1.legend()
-    # fig1.savefig('randomwalk_no_cross.pdf')
+    ax1.hist(RW_crit.deltas,bins='auto',density=True,label='Random walk')
+    ax1.plot(*RW_crit.gaussian(critical=True),label='Analytical with fudge')
+    ax1.set_title(r'Overdensity distribution, never crossing $\delta_{crit} = 1$')
+    ax1.set_ylabel(r'$P_{crit}(\delta \, | M) \times 2.2$')
+    ax1.set_xlabel(r'$\delta$')
+    ax1.legend()
+    fig1.savefig('randomwalk_no_cross.pdf')
         
     plt.show()
     
